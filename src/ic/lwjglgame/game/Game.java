@@ -1,5 +1,7 @@
 package ic.lwjglgame.game;
 
+import ic.lwjglgame.input.Keyboard;
+
 public class Game extends BaseGame {
 
 	 Model rect;
@@ -18,11 +20,11 @@ public class Game extends BaseGame {
      
      @Override
      public void update() {
-
+    	 super.update();
      }
 	
-	public Game() {
-		super();
+	public Game(Keyboard keyboard) {
+		super(keyboard);
 		
 		rect = ModelLoader.loadVAOFromArray(vertices, indices);
 		models.add(rect);

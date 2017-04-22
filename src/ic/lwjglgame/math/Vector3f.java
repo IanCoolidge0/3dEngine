@@ -40,6 +40,10 @@ public class Vector3f {
 		return new Vector3f(x + v.getX(), y + v.getY(), z + v.getZ());
 	}
 	
+	public Vector3f negate() {
+		return new Vector3f(-x, -y, -z);
+	}
+	
 	public float dot(Vector3f v) {
 		return x * v.getX() + y * v.getY() + z * v.getZ();
 	}

@@ -1,6 +1,7 @@
 package ic.lwjglgame.window;
 
 import ic.lwjglgame.game.Game;
+import ic.lwjglgame.input.Keyboard;
 
 public class Main {
 	
@@ -11,11 +12,14 @@ public class Main {
 	private static Window window;
 	private static Game game;
 	
+	private static Keyboard keyboard;
+	
 	public static void main(String[] args) {
 		window = new Window(WIDTH, HEIGHT, TITLE);
 		
-		window.init();
-		game = new Game();
+		long windowId = window.init();
+		keyboard = new Keyboard(windowId);
+		game = new Game(keyboard);
 
 		while(!window.shouldClose()) {
 			game.update();

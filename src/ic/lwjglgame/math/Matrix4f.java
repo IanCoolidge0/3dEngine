@@ -135,7 +135,6 @@ public class Matrix4f {
 	}
 	
 	public Matrix4f rotate(Vector3f rotation) {
-		Matrix4f rot = new Matrix4f();
 		float rx = (float) Math.toRadians(rotation.getX());
 		float ry = (float) Math.toRadians(rotation.getY());
 		float rz = (float) Math.toRadians(rotation.getZ());
@@ -147,20 +146,18 @@ public class Matrix4f {
 		matX.m21 = (float)  Math.sin(rx);
 		
 		Matrix4f matY = new Matrix4f();
-		matY.m00 = (float)  Math.cos(rz);
-		matY.m22 = (float)  Math.cos(rz);
-		matY.m02 = (float)  Math.sin(rz);
-		matY.m20 = (float) -Math.sin(rz);
+		matY.m00 = (float)  Math.cos(ry);
+		matY.m22 = (float)  Math.cos(ry);
+		matY.m02 = (float)  Math.sin(ry);
+		matY.m20 = (float) -Math.sin(ry);
 		
 		Matrix4f matZ = new Matrix4f();
-		matZ.m00 = (float)  Math.cos(ry);
-		matZ.m11 = (float)  Math.cos(ry);
-		matZ.m01 = (float) -Math.sin(ry);
-		matZ.m10 = (float)  Math.sin(ry);
+		matZ.m00 = (float)  Math.cos(rz);
+		matZ.m11 = (float)  Math.cos(rz);
+		matZ.m01 = (float) -Math.sin(rz);
+		matZ.m10 = (float)  Math.sin(rz);
 		
-		rot = matX.multiply(matY).multiply(matZ);
-		
-		return rot.multiply(this);
+		return matX.multiply(matY).multiply(matZ).multiply(this);
 	}
 	
 	public Matrix4f translate(Vector3f translation) {

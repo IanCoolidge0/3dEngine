@@ -9,20 +9,26 @@ public class Model {
 	private int indicesId;
 	private int size;
 	
-	private Matrix4f modelMatrix;
+	private Vector3f position;
+	private Vector3f rotation;
+	private float scale;
 	
-	public Model(int vaoId, int indicesId, int size, Vector3f translation, Vector3f rotation, float scale) {
+	public Model(int vaoId, int indicesId, int size, Vector3f position, Vector3f rotation, float scale) {
 		this.vaoId = vaoId;
 		this.indicesId = indicesId;
 		this.size = size;
-		this.modelMatrix = new Matrix4f().scale(scale).rotate(rotation).translate(translation);
+		this.position = position;
+		this.rotation = rotation;
+		this.scale = scale;
 	}
 	
 	public Model(int vaoId, int indicesId, int size) {
 		this.vaoId = vaoId;
 		this.indicesId = indicesId;
 		this.size = size;
-		this.modelMatrix = new Matrix4f();
+		this.position = new Vector3f(0,0,0);
+		this.rotation = new Vector3f(0,0,0);
+		this.scale = 1;
 	}
 	
 	public int getSize() {
@@ -37,20 +43,40 @@ public class Model {
 		return indicesId;
 	}
 	
-	public void translate(Vector3f d) {
-		modelMatrix = modelMatrix.translate(d);
-	}
-	
-	public void rotate(Vector3f d) {
-		modelMatrix = modelMatrix.rotate(d);
+	public Matrix4f getModelMatrix() {
+		return new Matrix4f().scale(scale).rotate(rotation).translate(position);
 	}
 
-	public void scale(float d) {
-		modelMatrix = modelMatrix.scale(d);
+	public Vector3f getPosition() {
+		return position;
+	}
+
+	public void setPosition(Vector3f position) {
+		this.position = position;
 	}
 	
-	public Matrix4f getModelMatrix() {
-		return modelMatrix;
+	public void translate(Vector3f d) {
+		position = position.add(d);
+	}
+
+	public Vector3f getRotation() {
+		return rotation;
+	}
+
+	public void setRotation(Vector3f rotation) {
+		this.rotation = rotation;
+	}
+	
+	public void rotate(Vector3f r) {
+		rotation = rotation.add(r);
+	}
+
+	public float getScale() {
+		return scale;
+	}
+
+	public void setScale(float scale) {
+		this.scale = scale;
 	}
 
 }

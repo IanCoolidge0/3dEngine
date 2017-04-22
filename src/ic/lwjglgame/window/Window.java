@@ -4,6 +4,8 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 
+import ic.lwjglgame.input.Keyboard;
+
 public class Window {
 
 	private int width;
@@ -18,7 +20,7 @@ public class Window {
 		this.title = title;
 	}
 
-	public void init() {
+	public long init() {
 		GLFW.glfwInit();
 		
 		GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GL11.GL_FALSE);
@@ -30,6 +32,8 @@ public class Window {
 		GLFW.glfwShowWindow(windowId);
 		
 		GL.createCapabilities();
+		
+		return windowId;
 	}
 	
 	public void run() {
