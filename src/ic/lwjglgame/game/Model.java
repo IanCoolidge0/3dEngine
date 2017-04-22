@@ -8,6 +8,7 @@ public class Model {
 	private int vaoId;
 	private int indicesId;
 	private int size;
+	private int texture;
 	
 	private Vector3f position;
 	private Vector3f rotation;
@@ -22,13 +23,14 @@ public class Model {
 		this.scale = scale;
 	}
 	
-	public Model(int vaoId, int indicesId, int size) {
+	public Model(int vaoId, int indicesId, int size, int texture) {
 		this.vaoId = vaoId;
 		this.indicesId = indicesId;
 		this.size = size;
 		this.position = new Vector3f(0,0,0);
 		this.rotation = new Vector3f(0,0,0);
 		this.scale = 1;
+		this.texture = texture;
 	}
 	
 	public int getSize() {
@@ -77,6 +79,10 @@ public class Model {
 
 	public void setScale(float scale) {
 		this.scale = scale;
+	}
+	
+	public int getTexture() {
+		return texture;
 	}
 
 }

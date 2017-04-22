@@ -3,6 +3,7 @@ package ic.lwjglgame.game;
 import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
@@ -33,6 +34,8 @@ public class BaseGame {
 		this.projectionMatrix = new Matrix4f();
 		this.keyboard = keyboard;
 		projectionMatrix.loadProjection(FOV, FAR_PLANE, NEAR_PLANE);
+		
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
 	}
 	
 	public void update() {
@@ -55,9 +58,14 @@ public class BaseGame {
 			shaderProgram.loadUniformProjectionMatrix(projectionMatrix);
 			shaderProgram.loadUniformViewMatrix(camera.getViewMatrix());
 			
+			GL13.glActiveTexture(GL13.GL_TEXTURE0);
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, model.getTexture());
+			
 			GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, model.getIndicesId());
 			GL11.glDrawElements(GL11.GL_TRIANGLES, model.getSize(), GL11.GL_UNSIGNED_INT, 0);
 			GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, 0);
+			
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
 			
 			GL20.glDisableVertexAttribArray(0);
 			GL20.glDisableVertexAttribArray(1);
