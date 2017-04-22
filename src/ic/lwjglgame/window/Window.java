@@ -4,8 +4,6 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 
-import ic.lwjglgame.input.Keyboard;
-
 public class Window {
 
 	private int width;

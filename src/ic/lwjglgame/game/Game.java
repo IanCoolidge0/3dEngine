@@ -1,6 +1,7 @@
 package ic.lwjglgame.game;
 
 import ic.lwjglgame.input.Keyboard;
+import ic.lwjglgame.math.Vector3f;
 
 public class Game extends BaseGame {
 
@@ -26,7 +27,7 @@ public class Game extends BaseGame {
 	public Game(Keyboard keyboard) {
 		super(keyboard);
 		
-		rect = ModelLoader.loadVAOFromArray(vertices, indices);
+		rect = ModelLoader.loadVAOFromOBJ("src/models/cube.obj");
 		models.add(rect);
 		
 	}

@@ -1,5 +1,8 @@
 package ic.lwjglgame.game;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
@@ -10,6 +13,8 @@ import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
+import ic.lwjglgame.util.Util;
+
 public class ModelLoader {
 
 	private static ArrayList<Integer> vaos;
@@ -18,6 +23,50 @@ public class ModelLoader {
 	public static void init() {
 		vaos = new ArrayList<Integer>();
 		vbos = new ArrayList<Integer>();
+	}
+	
+	public static Model loadVAOFromOBJ(String path) {
+		ArrayList<Float> vertices = new ArrayList<Float>();
+		ArrayList<Integer> indices = new ArrayList<Integer>();
+		
+		String file = Util.readFileAsString(path);
+		
+		BufferedReader reader = new BufferedReader(new StringReader(file));
+		String line = null;
+		try {
+			while((line = reader.readLine()) != null) {
+				String[] tokens = line.split(" ");
+				
+				switch(tokens[0]) 
+				{
+				case "v":
+					vertices.add(Float.parseFloat(tokens[1]));
+					vertices.add(Float.parseFloat(tokens[2]));
+					vertices.add(Float.parseFloat(tokens[3]));
+					break;
+					
+				case "f":
+					for(int i=1;i<4;i++) {
+						String[] token = tokens[i].split("/");
+						indices.add(Integer.parseInt(token[0])-1);
+					}
+					break;
+				
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		float[] arVertices = new float[vertices.size()];
+		int[] arIndices = new int[indices.size()];
+		
+		for(int i=0; i<arVertices.length; i++)
+			arVertices[i] = vertices.get(i);
+		for(int i=0; i<arIndices.length; i++)
+			arIndices[i] = indices.get(i);
+
+		return loadVAOFromArray(arVertices, arIndices);
 	}
 	
 	public static Model loadVAOFromArray(float[] vertices, int[] indices) {
