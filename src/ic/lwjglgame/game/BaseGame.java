@@ -48,6 +48,8 @@ public class BaseGame {
 		for(Model model: models) {
 			GL30.glBindVertexArray(model.getVaoId());
 			GL20.glEnableVertexAttribArray(0);
+			GL20.glEnableVertexAttribArray(1);
+			GL20.glEnableVertexAttribArray(2);
 
 			shaderProgram.loadUniformModelMatrix(model.getModelMatrix());
 			shaderProgram.loadUniformProjectionMatrix(projectionMatrix);
@@ -58,6 +60,8 @@ public class BaseGame {
 			GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, 0);
 			
 			GL20.glDisableVertexAttribArray(0);
+			GL20.glDisableVertexAttribArray(1);
+			GL20.glDisableVertexAttribArray(2);
 			GL30.glBindVertexArray(0);
 		}
 		
