@@ -1,6 +1,6 @@
 package ic.lwjglgame.game;
 
-import ic.lwjglgame.input.Keyboard;
+import ic.lwjglgame.input.Input;
 
 public class Game extends BaseGame {
 
@@ -37,7 +37,7 @@ public class Game extends BaseGame {
     	 super.update();
      }
 	
-	public Game(Keyboard keyboard) {
+	public Game(Input keyboard) {
 		super(keyboard);
 		
 		rect = ModelLoader.loadVAOFromOBJ("src/models/stall.obj", "src/models/stallTexture.png");

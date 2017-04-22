@@ -2,7 +2,7 @@ package ic.lwjglgame.game;
 
 import org.lwjgl.glfw.GLFW;
 
-import ic.lwjglgame.input.Keyboard;
+import ic.lwjglgame.input.Input;
 import ic.lwjglgame.math.Matrix4f;
 import ic.lwjglgame.math.Vector3f;
 
@@ -24,24 +24,26 @@ public class Camera {
 		this.angle = new Vector3f(0,0,0);
 	}
 	
-	public void update(Keyboard keyboard) {
-		if(keyboard.isKeyDown(GLFW.GLFW_KEY_D)) 
+	public void update(Input input) {
+		if(input.isKeyDown(GLFW.GLFW_KEY_D)) 
 			this.rotate(new Vector3f(0,-TURN_SPEED,0));
-		if(keyboard.isKeyDown(GLFW.GLFW_KEY_A))
+		if(input.isKeyDown(GLFW.GLFW_KEY_A))
 			this.rotate(new Vector3f(0,+TURN_SPEED,0));
 		
 		float yaw = (float) Math.toRadians(angle.getY());
 
-		if(keyboard.isKeyDown(GLFW.GLFW_KEY_W)) 
+		if(input.isKeyDown(GLFW.GLFW_KEY_W)) 
 			this.translate(new Vector3f(-RUN_SPEED * (float) Math.sin(yaw), 0, -RUN_SPEED * (float) Math.cos(yaw)));
-		if(keyboard.isKeyDown(GLFW.GLFW_KEY_S)) 
+		if(input.isKeyDown(GLFW.GLFW_KEY_S)) 
 			this.translate(new Vector3f(RUN_SPEED * (float) Math.sin(yaw), 0, RUN_SPEED * (float) Math.cos(yaw)));
 		
-		if(keyboard.isKeyDown(GLFW.GLFW_KEY_SPACE))
+		if(input.isKeyDown(GLFW.GLFW_KEY_SPACE))
 			this.translate(new Vector3f(0, RUN_SPEED, 0));
+		if(input.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT))
+			this.translate(new Vector3f(0, -RUN_SPEED, 0));
 		
-		if(keyboard.isKeyDown(GLFW.GLFW_KEY_Y))
-			this.rotate(new Vector3f(-TURN_SPEED/2,0,0));
+		if(input.isButtonDown(GLFW.GLFW_MOUSE_BUTTON_2))
+			this.rotate(new Vector3f(0.1f * (input.getMouseY() - input.getLastMouseY()), 0, 0));
 	}
 	
 	public Matrix4f getViewMatrix() {

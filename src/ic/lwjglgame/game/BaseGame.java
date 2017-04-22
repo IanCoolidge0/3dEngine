@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
-import ic.lwjglgame.input.Keyboard;
+import ic.lwjglgame.input.Input;
 import ic.lwjglgame.math.Matrix4f;
 import ic.lwjglgame.shaders.ShaderProgram;
 
@@ -19,29 +19,29 @@ public class BaseGame {
 	public static final float NEAR_PLANE = 0.1f;
 
 	protected ArrayList<Model> models;
-	protected Keyboard keyboard;
+	protected Input input;
 	
 	private ShaderProgram shaderProgram;
 	private Matrix4f projectionMatrix;
 	private Camera camera;
 	
-	public BaseGame(Keyboard keyboard) {
+	public BaseGame(Input input) {
 		ModelLoader.init();
 		this.models = new ArrayList<Model>();
 		this.camera = new Camera();
 		this.shaderProgram = new ShaderProgram("src/ic/lwjglgame/shaders/basic.vs", 
 											   "src/ic/lwjglgame/shaders/basic.fs");
 		this.projectionMatrix = new Matrix4f();
-		this.keyboard = keyboard;
+		this.input = input;
 		projectionMatrix.loadProjection(FOV, FAR_PLANE, NEAR_PLANE);
 		
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		GL11.glDisable(GL11.GL_CULL_FACE);
 	}
 	
 	public void update() {
-		camera.update(keyboard);
+		input.update();
+		camera.update(input);
 	}
 	
 	public void render() {
