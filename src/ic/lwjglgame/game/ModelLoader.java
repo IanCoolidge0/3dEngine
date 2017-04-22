@@ -104,17 +104,17 @@ public class ModelLoader {
 					}
 					for(int i=1;i<4;i++) {
 						String[] token = tokens[i].split("/");
-						
-						int vertPtr = Integer.parseInt(token[0]) - 1;
+
+						int vertPtr = Integer.parseInt(token[0]) - 1; //1
 						
 						indices.add(vertPtr);
 						
-						arTexCoords[vertPtr*2] = texCoords.get(Integer.parseInt(token[1])-1);
-						arTexCoords[vertPtr*2 + 1] = texCoords.get(Integer.parseInt(token[1]));
+						arTexCoords[vertPtr*2] = texCoords.get(2*Integer.parseInt(token[1])-2);
+						arTexCoords[vertPtr*2 + 1] = 1 - texCoords.get(2*Integer.parseInt(token[1])-1);
 						
-						arNormals[vertPtr*2] = normals.get(Integer.parseInt(token[2])-1);
-						arNormals[vertPtr*2 + 1] = normals.get(Integer.parseInt(token[2]));
-						arNormals[vertPtr*2 + 2] = normals.get(Integer.parseInt(token[2])+1);
+						arNormals[vertPtr*2] = normals.get(3*Integer.parseInt(token[2])-3);
+						arNormals[vertPtr*2 + 1] = normals.get(3*Integer.parseInt(token[2])-2);
+						arNormals[vertPtr*2 + 2] = normals.get(3*Integer.parseInt(token[2])-1);
 					}
 					break;
 				
@@ -131,7 +131,7 @@ public class ModelLoader {
 			arVertices[i] = vertices.get(i);
 		for(int i=0; i<arIndices.length; i++)
 			arIndices[i] = indices.get(i);
-		
+
 		return loadVAOFromArray(arVertices, arTexCoords, arNormals, arIndices, texturePath);
 	}
 	

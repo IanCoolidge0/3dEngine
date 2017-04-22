@@ -12,6 +12,20 @@ public class Game extends BaseGame {
              0.5f, -0.5f, 0f,
              0.5f, 0.5f, 0f
      };
+	 
+	 float[] textureCoords = {
+		0,0,
+		0,1,
+		1,1,
+		1,0
+	 };
+
+	 float[] normals = {
+		0,0,0,
+		0,0,0,
+		0,0,0,
+		0,0,0
+	 };
 
      int[] indices = {
              0, 1, 2,
@@ -26,7 +40,8 @@ public class Game extends BaseGame {
 	public Game(Keyboard keyboard) {
 		super(keyboard);
 		
-		rect = ModelLoader.loadVAOFromOBJ("src/models/cube.obj", "src/models/cube.png");
+		rect = ModelLoader.loadVAOFromOBJ("src/models/stall.obj", "src/models/stallTexture.png");
+		rect.setScale(0.1f);
 		models.add(rect);
 		
 	}

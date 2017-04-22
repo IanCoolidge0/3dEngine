@@ -36,6 +36,12 @@ public class Camera {
 			this.translate(new Vector3f(-RUN_SPEED * (float) Math.sin(yaw), 0, -RUN_SPEED * (float) Math.cos(yaw)));
 		if(keyboard.isKeyDown(GLFW.GLFW_KEY_S)) 
 			this.translate(new Vector3f(RUN_SPEED * (float) Math.sin(yaw), 0, RUN_SPEED * (float) Math.cos(yaw)));
+		
+		if(keyboard.isKeyDown(GLFW.GLFW_KEY_SPACE))
+			this.translate(new Vector3f(0, RUN_SPEED, 0));
+		
+		if(keyboard.isKeyDown(GLFW.GLFW_KEY_Y))
+			this.rotate(new Vector3f(-TURN_SPEED/2,0,0));
 	}
 	
 	public Matrix4f getViewMatrix() {
