@@ -1,6 +1,7 @@
 package ic.lwjglgame.game;
 
 import ic.lwjglgame.input.Input;
+import ic.lwjglgame.math.Vector3f;
 
 public class Game extends BaseGame {
 
@@ -40,8 +41,8 @@ public class Game extends BaseGame {
 	public Game(Input keyboard) {
 		super(keyboard);
 		
-		rect = ModelLoader.loadVAOFromOBJ("src/models/stall.obj", "src/models/stallTexture.png");
-		rect.setScale(0.1f);
+		rect = ModelLoader.loadVAOFromOBJ("src/models/house.obj", "src/models/house.jpg");
+		rect.setScale(0.05f);
 		models.add(rect);
 		
 	}

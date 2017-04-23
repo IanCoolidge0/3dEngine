@@ -20,7 +20,7 @@ public class Camera {
 	}
 	
 	public Camera() {
-		this.pos = new Vector3f(0.2f,0,2f);
+		this.pos = new Vector3f(0,0,0);
 		this.angle = new Vector3f(0,0,0);
 	}
 	
@@ -43,7 +43,7 @@ public class Camera {
 			this.translate(new Vector3f(0, -RUN_SPEED, 0));
 		
 		if(input.isButtonDown(GLFW.GLFW_MOUSE_BUTTON_2))
-			this.rotate(new Vector3f(0.1f * (input.getMouseY() - input.getLastMouseY()), 0, 0));
+			this.rotate(new Vector3f(TURN_SPEED * (input.getMouseY() - input.getLastMouseY()), 0, 0));
 	}
 	
 	public Matrix4f getViewMatrix() {
