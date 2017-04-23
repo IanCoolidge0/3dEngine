@@ -65,10 +65,10 @@ public class ModelLoader {
 		ArrayList<Float> texCoords = new ArrayList<Float>();
 		ArrayList<Float> normals = new ArrayList<Float>();
 		ArrayList<Float> vertices = new ArrayList<Float>();
-		ArrayList<Integer> indices = new ArrayList<Integer>();
 		
-		float[] arTexCoords = null;
-		float[] arNormals = null;
+		ArrayList<Float> allTexCoords = new ArrayList<Float>();
+		ArrayList<Float> allNormals = new ArrayList<Float>();
+		ArrayList<Float> allVertices = new ArrayList<Float>();
 		
 		String file = Util.readFileAsString(path);
 		
@@ -81,40 +81,36 @@ public class ModelLoader {
 				switch(tokens[0]) 
 				{
 				case "v":
-					vertices.add(Float.parseFloat(tokens[1]));
-					vertices.add(Float.parseFloat(tokens[2]));
-					vertices.add(Float.parseFloat(tokens[3]));
+					allVertices.add(Float.parseFloat(tokens[1]));
+					allVertices.add(Float.parseFloat(tokens[2]));
+					allVertices.add(Float.parseFloat(tokens[3]));
 					break;
 				
 				case "vt":
-					texCoords.add(Float.parseFloat(tokens[1]));
-					texCoords.add(Float.parseFloat(tokens[2]));
+					allTexCoords.add(Float.parseFloat(tokens[1]));
+					allTexCoords.add(Float.parseFloat(tokens[2]));
 					break;
 					
 				case "vn":
-					normals.add(Float.parseFloat(tokens[1]));
-					normals.add(Float.parseFloat(tokens[2]));
-					normals.add(Float.parseFloat(tokens[3]));
+					allNormals.add(Float.parseFloat(tokens[1]));
+					allNormals.add(Float.parseFloat(tokens[2]));
+					allNormals.add(Float.parseFloat(tokens[3]));
 					break;
 					
 				case "f":
-					if(arTexCoords == null) {
-						arTexCoords = new float[(int)(vertices.size()*2.0/3)];
-						arNormals = new float[vertices.size()];
-					}
 					for(int i=1;i<4;i++) {
 						String[] token = tokens[i].split("/");
 
-						int vertPtr = Integer.parseInt(token[0]) - 1; //1
+						vertices.add(allVertices.get(3 * Integer.parseInt(token[0]) - 3));
+						vertices.add(allVertices.get(3 * Integer.parseInt(token[0]) - 2));
+						vertices.add(allVertices.get(3 * Integer.parseInt(token[0]) - 1));
 						
-						indices.add(vertPtr);
+						texCoords.add(allTexCoords.get(2 * Integer.parseInt(token[1]) - 2));
+						texCoords.add(1 - allTexCoords.get(2 * Integer.parseInt(token[1]) - 1));
 						
-						arTexCoords[vertPtr*2] = texCoords.get(2*Integer.parseInt(token[1])-2);
-						arTexCoords[vertPtr*2 + 1] = 1 - texCoords.get(2*Integer.parseInt(token[1])-1);
-						
-						arNormals[vertPtr*2] = normals.get(3*Integer.parseInt(token[2])-3);
-						arNormals[vertPtr*2 + 1] = normals.get(3*Integer.parseInt(token[2])-2);
-						arNormals[vertPtr*2 + 2] = normals.get(3*Integer.parseInt(token[2])-1);
+						normals.add(allNormals.get(3 * Integer.parseInt(token[2]) - 3));
+						normals.add(allNormals.get(3 * Integer.parseInt(token[2]) - 2));
+						normals.add(allNormals.get(3 * Integer.parseInt(token[2]) - 1));
 					}
 					break;
 				
@@ -125,17 +121,20 @@ public class ModelLoader {
 		}
 		
 		float[] arVertices = new float[vertices.size()];
-		int[] arIndices = new int[indices.size()];
+		float[] arTexCoords = new float[texCoords.size()];
+		float[] arNormals = new float[normals.size()];
 		
 		for(int i=0; i<arVertices.length; i++) 
 			arVertices[i] = vertices.get(i);
-		for(int i=0; i<arIndices.length; i++)
-			arIndices[i] = indices.get(i);
+		for(int i=0; i<arTexCoords.length; i++)
+			arTexCoords[i] = texCoords.get(i);
+		for(int i=0; i<arNormals.length; i++)
+			arNormals[i] = normals.get(i);
 
-		return loadVAOFromArray(arVertices, arTexCoords, arNormals, arIndices, texturePath);
+		return loadVAOFromArray(arVertices, arTexCoords, arNormals, texturePath);
 	}
 	
-	public static Model loadVAOFromArray(float[] vertices, float[] textureCoords, float[] normals, int[] indices, String texturePath) {
+	public static Model loadVAOFromArray(float[] vertices, float[] textureCoords, float[] normals, String texturePath) {
 		int vaoId = GL30.glGenVertexArrays();
 		GL30.glBindVertexArray(vaoId);
 		vaos.add(vaoId);
@@ -146,16 +145,9 @@ public class ModelLoader {
 		
 		GL30.glBindVertexArray(0);
 		
-		int indicesId = GL15.glGenBuffers();
-		vbos.add(indicesId);
-		
-		GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, indicesId);
-		GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, genIntBuffer(indices), GL15.GL_STATIC_DRAW);
-		GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, 0);
-		
 		int textureID = loadTexture(texturePath);
 		
-		return new Model(vaoId, indicesId, indices.length, textureID);
+		return new Model(vaoId, vertices.length / 3, textureID);
 	}
 	
 		

@@ -6,7 +6,6 @@ import ic.lwjglgame.math.Vector3f;
 public class Model {
 
 	private int vaoId;
-	private int indicesId;
 	private int size;
 	private int texture;
 	
@@ -16,16 +15,14 @@ public class Model {
 	
 	public Model(int vaoId, int indicesId, int size, Vector3f position, Vector3f rotation, float scale) {
 		this.vaoId = vaoId;
-		this.indicesId = indicesId;
 		this.size = size;
 		this.position = position;
 		this.rotation = rotation;
 		this.scale = scale;
 	}
 	
-	public Model(int vaoId, int indicesId, int size, int texture) {
+	public Model(int vaoId, int size, int texture) {
 		this.vaoId = vaoId;
-		this.indicesId = indicesId;
 		this.size = size;
 		this.position = new Vector3f(0,0,0);
 		this.rotation = new Vector3f(0,0,0);
@@ -39,10 +36,6 @@ public class Model {
 	
 	public int getVaoId() {
 		return vaoId;
-	}
-	
-	public int getIndicesId() {
-		return indicesId;
 	}
 	
 	public Matrix4f getModelMatrix() {

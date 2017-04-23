@@ -11,17 +11,23 @@ public class Game extends BaseGame {
              -0.5f, 0.5f, 0f,
              -0.5f, -0.5f, 0f,
              0.5f, -0.5f, 0f,
-             0.5f, 0.5f, 0f
+             0.5f, -0.5f, 0f,
+             0.5f, 0.5f, 0f,
+             -0.5f, 0.5f, 0f
      };
 	 
 	 float[] textureCoords = {
 		0,0,
 		0,1,
 		1,1,
-		1,0
+		1,1,
+		1,0,
+		0,0
 	 };
 
 	 float[] normals = {
+		0,0,0,
+		0,0,0,
 		0,0,0,
 		0,0,0,
 		0,0,0,

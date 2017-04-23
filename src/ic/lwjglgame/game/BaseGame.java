@@ -62,10 +62,8 @@ public class BaseGame {
 			
 			GL13.glActiveTexture(GL13.GL_TEXTURE0);
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, model.getTexture());
-			
-			GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, model.getIndicesId());
-			GL11.glDrawElements(GL11.GL_TRIANGLES, model.getSize(), GL11.GL_UNSIGNED_INT, 0);
-			GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, 0);
+
+			GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, model.getSize());
 			
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
 			
